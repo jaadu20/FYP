@@ -6,7 +6,7 @@ import { Mail, Home, Info, Rocket, PhoneCall } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { toast, Toaster } from "react-hot-toast";
 import { Footer } from "../../components/Footer";
-import api from "../..";
+import api from "../../api/index";
 
 interface ForgetPassForm {
   email: string;

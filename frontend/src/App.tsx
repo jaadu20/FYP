@@ -10,19 +10,15 @@ import { Signup } from "./pages/auth/Signup";
 import { CompanyDashboard } from "./pages/company/Dashboard";
 import { CandidateDashboard } from "./pages/candidate/Dashboard";
 import { AIInterview } from "./pages/interview/AIInterview";
-import { InterviewProgress } from "./pages/interview/InterviewProgress";
 import { CandidateProfile } from "./pages/candidate/CandidateProfile";
 import { JobPostingForm } from "./pages/company/JobPostingForm";
 import { useAuthStore } from "./store/authStore";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
-import { Forgetpass } from "./pages/auth/ForgetPassword";
-import { ResetPassword } from "./pages/auth/ResetPassword";
 import { CandidatesResult } from "./pages/company/CandidatesResult";
 import { CompanyProfile } from "./pages/company/CompanyProfile";
 import { Getstarted } from "./pages/Getstarted";
-import { JobApplicationPage } from "./pages/candidate/JobApplicationPage";
-
+import { JSX } from "react";
 function PrivateRoute({
   children,
   allowedRoles,
@@ -54,12 +50,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/getstarted" element={<Getstarted />} />
-        <Route path="/forgetpass" element={<Forgetpass />} />
-        <Route
-          path="/reset-password/:uidb64/:token"
-          element={<ResetPassword />}
-        />
-
+    
         {/* Company Routes */}
         <Route
           path="/company/dashboard"
@@ -119,10 +110,7 @@ function App() {
             </PrivateRoute>
           }
         />
-
-        <Route path="/complete" element={<InterviewProgress />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path="/jobs/:jobId/apply" element={<JobApplicationPage />} />
       </Routes>
     </Router>
   );

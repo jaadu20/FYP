@@ -6,7 +6,7 @@ import { Lock, Mail } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { useAuthStore } from "../../store/authStore";
 import { Footer } from "../../components/Footer";
-import api from "../../api";
+import api from "../../api/index";
 import { toast, Toaster } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 

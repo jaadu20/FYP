@@ -14,7 +14,7 @@ import {
 import { Button } from "../../components/ui/Button";
 import { Footer } from "../../components/Footer";
 import { toast, Toaster } from "react-hot-toast";
-import api from "../../api";
+import api from "../../api/index";
 
 interface SignupForm {
   email: string;
