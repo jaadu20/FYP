@@ -64,97 +64,8 @@ export function AIInterview() {
   );
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
 
-  // Start interview
-  // const startInterview = async () => {
-
-  //   setShowPopup(false);
-
-  //   try {
-  //     const token = localStorage.getItem("accessToken");
-
-  //     if (!token) {
-  //       throw new Error("No authentication token found");
-  //     }
-
-  //     const response = await fetch("/interview/start", {
-  //       // Added /api/ prefix
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         application_id: "your_application_id", // Should come from props/state
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       throw new Error(errorData.error || "Failed to start interview");
-  //     }
-
-  //     const data = await response.json(); // Parse JSON response
-
-  //     // Destructure after validation
-  //     const {
-  //       interview_id: interviewId,
-  //       questions,
-  //       current_question: currentQuestion,
-  //     } = data;
-
-  //     if (!questions || !questions.length) {
-  //       throw new Error("No questions received");
-  //     }
-
-  //     setInterviewId(interviewId);
-  //     setQuestions(questions);
-  //     setCurrentQuestionIndex(currentQuestion);
-
-  //     // Initialize media first
-  //     await initializeMediaStream();
-
-  //     playQuestionAudio(questions[currentQuestion].text);
-  //     startVideoRecording();
-  //   } catch (error) {
-  //     console.error("Interview start error:", error);
-  //     toast.error(
-  //       error instanceof Error ? error.message : "Failed to start interview"
-  //     );
-
-  //     // Reset state on error
-  //     // setShowPopup(true);
-  //     setInterviewId("");
-  //     setQuestions([]);
-  //   }
-  // };
-
   const startInterview = async () => {
     setShowPopup(false);
-
-    try {
-      const token = localStorage.getItem("accessToken");
-      if (!token) throw new Error("No authentication token found");
-
-      const response = await api.post("/interview/start", {
-        application_id: applicationId,
-      });
-
-      const data = response.data;
-
-      setInterviewId(data.interview_id);
-      setQuestions(data.questions);
-      setCurrentQuestionIndex(data.current_question);
-
-      await initializeMediaStream();
-      playQuestionAudio(data.questions[data.current_question].text);
-      startVideoRecording();
-    } catch (error) {
-      console.error("Interview start error:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Failed to start interview"
-      );
-      // setShowPopup(true);
-    }
   };
 
   // Add media initialization function
@@ -373,37 +284,6 @@ export function AIInterview() {
           >
             <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8">
               <div className="text-center space-y-6">
-                <h1 className="text-4xl font-extrabold text-gray-800">
-                  🚀 Ready for Your Interview?
-                </h1>
-                <div className="space-y-4 text-gray-600">
-                  <p>This interview will contain 15 exciting questions 🎤</p>
-                  <p>Estimated duration: 20-30 minutes ⏱️</p>
-                  <div className="my-4">
-                    <Progress
-                      value={(currentQuestionIndex / 15) * 100}
-                      className="h-2 rounded-full bg-green-200"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-6 text-left">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h3 className="font-semibold mb-2">Requirements ⚙️</h3>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-900">
-                      <li>Stable internet connection</li>
-                      <li>Webcam & Microphone</li>
-                      <li>Quiet environment</li>
-                    </ul>
-                  </div>
-                  <div className="p-4 bg-green-50 rounded-lg">
-                    <h3 className="font-semibold mb-2">Tips 💡</h3>
-                    <ul className="list-disc pl-4 space-y-1 text-green-900">
-                      <li>Dress professionally 👔</li>
-                      <li>Look directly at the camera 👀</li>
-                      <li>Speak clearly and confidently 🗣️</li>
-                    </ul>
-                  </div>
-                </div>
                 <Button
                   size="lg"
                   onClick={startInterview}
@@ -415,7 +295,7 @@ export function AIInterview() {
                   ) : (
                     <Video className="h-6 w-6 mr-2" />
                   )}
-                  Start Interview Now
+                  Start
                 </Button>
               </div>
             </div>
@@ -450,7 +330,7 @@ export function AIInterview() {
                     className="relative inline-flex items-center px-6 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-xl shadow-sm hover:bg-indigo-700 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
                   >
                     <span className="absolute left-0 top-0 h-full w-full bg-indigo-700 opacity-0 group-hover:opacity-5 transition duration-300 rounded-xl" />
-                    Exit Interview
+                    Exit
                     <svg
                       className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
                       fill="none"
@@ -482,7 +362,7 @@ export function AIInterview() {
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
                       <span className="text-gray-700 text-lg">
-                        🚫 Camera is Off
+                        Camera is Off
                       </span>
                     </div>
                   )}
@@ -570,13 +450,13 @@ export function AIInterview() {
                     />
                   </div>
                   <h2 className="text-2xl font-bold mb-2 text-indigo-700">
-                    AI Interviewer 🤖
+                    AI Interviewer
                   </h2>
                   <div className="text-gray-600 text-center space-y-2">
                     <p>
                       {isSpeaking
-                        ? "Speaking... 🗣️"
-                        : "Analyzing responses & generating questions... 🔍"}
+                        ? "Speaking... "
+                        : "Analyzing responses & generating questions... "}
                     </p>
                   </div>
                   <div className="mt-4 p-2 bg-indigo-50 rounded-md shadow-inner">
@@ -595,7 +475,7 @@ export function AIInterview() {
                     className="w-full py-3 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white transition-colors"
                   >
                     <Repeat className="h-5 w-5 mr-2" />
-                    Repeat Question
+                    Repeat
                   </Button>
                   <Button
                     onClick={handleAnswerSubmit}
@@ -605,15 +485,15 @@ export function AIInterview() {
                     {isLoading ? (
                       <>
                         <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                        Processing...
+                        Processin
                       </>
                     ) : currentQuestionIndex < 14 ? (
                       <>
                         <Send className="h-5 w-5 mr-2" />
-                        Submit Answer
+                        Submit
                       </>
                     ) : (
-                      "Complete Interview 🎉"
+                      "Complete Interview "
                     )}
                   </Button>
                 </div>
@@ -624,7 +504,7 @@ export function AIInterview() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
-                    🎥 Interview in Progress - Stay focused and shine! ✨
+                    Interview in Progress
                   </motion.div>
                 )}
 
@@ -634,8 +514,7 @@ export function AIInterview() {
                     initial={{ scale: 0.9 }}
                     animate={{ scale: 1 }}
                   >
-                    ⚠️ Warning: Please ensure your camera and microphone are
-                    enabled
+                    Please ensure your camera and microphone are enabled
                   </motion.div>
                 )}
 
@@ -644,7 +523,7 @@ export function AIInterview() {
                   className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-colors shadow-xl rounded-full"
                   disabled={currentQuestionIndex < 14}
                 >
-                  Complete Interview 🚀
+                  Complete
                 </Button>
               </aside>
             </main>
