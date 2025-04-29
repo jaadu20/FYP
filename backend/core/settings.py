@@ -26,9 +26,7 @@ INSTALLED_APPS = [
     'channels',
     # My apps
     'users',
-    'interview',
     'jobs',
-    'job_applications',
 ]
 
 # Configure ASGI application
@@ -105,23 +103,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'aivis',
+        'NAME': 'fyp',
         'USER': 'postgres',
-        'PASSWORD': '52-IsB_24',
+        'PASSWORD': '12345678',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
 
-# EMAIL CONFIGURATION 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mjconnect.solutions@gmail.com'
-EMAIL_HOST_PASSWORD = '52-IsB_25'
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -151,10 +141,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "http://127.0.0.1:5173",
-# ]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = [
@@ -171,11 +157,3 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AZURE_SPEECH_KEY =  os.getenv('AZURE_SPEECH_KEY')
-AZURE_SPEECH_REGION = 'eastus' 
-
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
-
-GROQ_API_KEY = os.getenv('GROQ_API_KEY')

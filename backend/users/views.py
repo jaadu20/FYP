@@ -63,33 +63,3 @@ class ForgotPasswordView(APIView):
             status=status.HTTP_200_OK,
         )
 
-
-class ResetPasswordView(APIView):
-    def post(self, request):
-        uidb64 = request.data.get("uidb64")
-        token = request.data.get("token")
-        new_password = request.data.get("password")
-
-        try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return Response(
-                {"detail": "Invalid reset link"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        if not default_token_generator.check_token(user, token):
-            return Response(
-                {"detail": "Invalid or expired token"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        user.set_password(new_password)
-        user.save()
-        PasswordReset.objects.filter(user=user).delete()
-        
-        return Response(
-            {"detail": "Password reset successful"},
-            status=status.HTTP_200_OK
-        )
